@@ -9,6 +9,7 @@ import {
     List,
     ListItemIcon,
     ListItem,
+    ListItemText,
     FormControl,
     Input,
     InputLabel,
@@ -19,6 +20,7 @@ import {
 } from '@material-ui/core';
 import presheen from '../../../assets/images/presheen.png';
 import ListItemComponent from '../ListItem/ListItem';
+import CloseIcon from '@material-ui/icons/Close';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 const useStyles = makeStyles(theme => ({
     listitemicon: {
@@ -35,6 +37,7 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
     },
     paper: {
+        backgroundColor: theme.palette.background.paper,
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
@@ -86,6 +89,7 @@ const BaseListComponent = (props) => {
     const ObjToArrayObj = (obj) => {
         // returns an array object of keys with values in them
         var data = [];
+        console.log('obj',obj);
         var keys = Object.keys(obj);
         var values = Object.values(obj);
         // console.log('keys', keys);
@@ -107,20 +111,19 @@ const BaseListComponent = (props) => {
                         <h1 className="text-center"> WISH LIST </h1>
                     </div>
                 </div>
-                {_.isEmpty(items) ? (<div>Nothing</div>) :
                     <div>
                         <Grid container spacing={3}>
                             <Grid item xs={12} sm={6}>
                                 <Paper elevation={3} className={classes.weiTheme}>
                                     <div className="container p-3">
-                                        <h1 className="text-center text-uppercase">Wei</h1>
+                                        <h1 className="text-center text-uppercase" style={{color: '#ffffff', fontWeight: 'bold'}}>Wei</h1>
                                     </div>
                                     <List component="div" disablePadding>
-                                        {ObjToArrayObj(items.Wei.list) !== 0 ?
+                                        {(items == null || items.Wei == null) ? (<div className="container"> There are no items</div>) :
                                             ObjToArrayObj(items.Wei.list).map((item) => (
                                                 (
                                                     <ListItemComponent item={item} owner={'Wei'} />
-                                                ))) : (<div> There are no items</div>)}
+                                                )))}
                                         <ListItem className={classes.listitem}>
                                             <ListItemIcon className={classes.listitemicon} onClick={() => handleOpen('Wei')}>
                                                 <AddCircleOutlineOutlinedIcon />
@@ -132,14 +135,14 @@ const BaseListComponent = (props) => {
                             <Grid item xs={12} sm={6}>
                                 <Paper elevation={3} className={classes.paneeTheme}>
                                     <div className="container p-3">
-                                        <h1 className="text-center text-uppercase">Panee</h1>
+                                        <h1 className="text-center text-uppercase" style={{color: '#ffffff', fontWeight: 'bold'}}>Panee</h1>
                                     </div>
                                     <List component="div" disablePadding>
-                                        {ObjToArrayObj(items.Panee.list) !== 0 ?
+                                        {(items == null || items.Panee == null) ? (<div className="container"> There are no items</div>) :
                                             ObjToArrayObj(items.Panee.list).map((item) => (
                                                 (
                                                     <ListItemComponent item={item} owner={'Panee'} />
-                                                ))) : (<div> There are no items</div>)}
+                                                )))}
                                         <ListItem className={classes.listitem}>
                                             <ListItemIcon className={classes.listitemicon} onClick={() => handleOpen('Panee')}>
                                                 <AddCircleOutlineOutlinedIcon />
@@ -150,7 +153,6 @@ const BaseListComponent = (props) => {
                             </Grid>
                         </Grid>
                     </div>
-                }
             </Container>
             <Modal
                 aria-labelledby="transition-modal-title"
@@ -168,7 +170,16 @@ const BaseListComponent = (props) => {
                     <div className={classes.paper}>
                         <div class="row">
                             <div class="container">
-                                <h3>Add Your Item! :D</h3>
+                            <List component="div">
+                                    <ListItem>
+                                        <ListItemText>
+                                            <h3>Add New Item! :D</h3>
+                                        </ListItemText>
+                                        <ListItemIcon onClick={() => handleClose()}>
+                                            <CloseIcon />
+                                        </ListItemIcon>
+                                    </ListItem>
+                                </List>
                                 <form>
                                     <FormControl fullWidth={true}>
                                         <InputLabel htmlFor="name">Item Name</InputLabel>
@@ -178,6 +189,7 @@ const BaseListComponent = (props) => {
                                         <InputLabel htmlFor="link">Link </InputLabel>
                                         <Input id="link" name="link" value={values.link} onChange={handleInputChange} />
                                     </FormControl>
+                                    <br/>
                                     <Button variant="outlined" color="primary" onClick={event => handleSubmit(event, currentUser)}>Submit</Button>
                                 </form>
                             </div>

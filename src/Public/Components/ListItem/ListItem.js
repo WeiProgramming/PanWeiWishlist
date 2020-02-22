@@ -12,8 +12,9 @@ import { List,
     Button,
 Backdrop} from '@material-ui/core';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
-import CreateIcon from '@material-ui/icons/Create';
+import CloseIcon from '@material-ui/icons/Close';
 import DeleteIcon from '@material-ui/icons/Delete';
+import CreateIcon from '@material-ui/icons/Create';
 import { withFirebase } from '../../../Firebase/index';
 import {makeStyles} from "@material-ui/core/index";
 
@@ -96,7 +97,16 @@ const BaseListItemComponent = (props) => {
                     <div className={classes.paper}>
                         <div class="row">
                             <div class="container">
-                                <h3>Edit Me! :D</h3>
+                                <List component="div">
+                                    <ListItem>
+                                        <ListItemText>
+                                            <h3>Edit Me! :D</h3>
+                                        </ListItemText>
+                                        <ListItemIcon onClick={() => handleClose()}>
+                                            <CloseIcon />
+                                        </ListItemIcon>
+                                    </ListItem>
+                                </List>
                                 <form>
                                     <FormControl fullWidth={true}>
                                         <InputLabel htmlFor="name">Item Name</InputLabel>

@@ -14,6 +14,7 @@ class Firebase {
         });
     }
     async editWishItem(name, item, itemKey) {
+        console.log(name, item, itemKey);
         return await this.db.ref(`WishList/${name}/list/${itemKey}`).set({
             name: item.name,
             link: item.link

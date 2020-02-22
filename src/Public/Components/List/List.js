@@ -17,9 +17,9 @@ import {
     Backdrop,
     Fade
 } from '@material-ui/core';
+import presheen from '../../../assets/images/presheen.png';
 import ListItemComponent from '../ListItem/ListItem';
 import AddCircleOutlineOutlinedIcon from '@material-ui/icons/AddCircleOutlineOutlined';
-
 const useStyles = makeStyles(theme => ({
     listitemicon: {
         display: 'flex',
@@ -35,11 +35,18 @@ const useStyles = makeStyles(theme => ({
         justifyContent: 'center',
     },
     paper: {
-        backgroundColor: theme.palette.background.paper,
         border: '2px solid #000',
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    paneeTheme: {
+        background: 'rgb(255,154,158)',
+        background: 'radial-gradient(circle, rgba(255,154,158,1) 0%, rgba(254,207,239,1) 100%)'
+    },
+    weiTheme: {
+        background: 'rgb(161,196,253)',
+        background: 'radial-gradient(circle, rgba(161,196,253,1) 0%, rgba(194,233,251,1) 100%)'
+    }
 }))
 
 const BaseListComponent = (props) => {
@@ -92,15 +99,22 @@ const BaseListComponent = (props) => {
     return (
         <div>
             <Container maxWidth="xl">
-                <div class="Title">
-                    <h1 class="text-center">Our Wish List {"<"}3 :D</h1>
+                <div className="row">
+                    <div className="col-md-12 row justify-content-center">
+                        <img src={presheen} style={{width: '100px'}}/>
+                    </div>
+                    <div className="col-md-12 mb-3">
+                        <h1 className="text-center"> WISH LIST </h1>
+                    </div>
                 </div>
                 {_.isEmpty(items) ? (<div>Nothing</div>) :
                     <div>
                         <Grid container spacing={3}>
-                            <Grid item xs={6}>
-                                <Paper elevation={3}>
-                                    <h1>Wei's List</h1>
+                            <Grid item xs={12} sm={6}>
+                                <Paper elevation={3} className={classes.weiTheme}>
+                                    <div className="container p-3">
+                                        <h1 className="text-center text-uppercase">Wei</h1>
+                                    </div>
                                     <List component="div" disablePadding>
                                         {ObjToArrayObj(items.Wei.list) !== 0 ?
                                             ObjToArrayObj(items.Wei.list).map((item) => (
@@ -115,9 +129,11 @@ const BaseListComponent = (props) => {
                                     </List>
                                 </Paper>
                             </Grid>
-                            <Grid item xs={6}>
-                                <Paper elevation={3}>
-                                    <h1>Panee's List</h1>
+                            <Grid item xs={12} sm={6}>
+                                <Paper elevation={3} className={classes.paneeTheme}>
+                                    <div className="container p-3">
+                                        <h1 className="text-center text-uppercase">Panee</h1>
+                                    </div>
                                     <List component="div" disablePadding>
                                         {ObjToArrayObj(items.Panee.list) !== 0 ?
                                             ObjToArrayObj(items.Panee.list).map((item) => (
@@ -145,7 +161,7 @@ const BaseListComponent = (props) => {
                 closeAfterTransition
                 BackdropComponent={Backdrop}
                 BackdropProps={{
-                    timeout: 500,
+                    timeout: 500
                 }}
             >
                 <Fade in={open}>
